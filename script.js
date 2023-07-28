@@ -23,6 +23,8 @@ operators.forEach((btn) =>
   })
 );
 
+window.addEventListener("keydown",getKeyPress)
+
 deleteNumber.addEventListener('click',deleteNum)
 
 equal.addEventListener('click',()=>{
@@ -32,7 +34,7 @@ equal.addEventListener('click',()=>{
 })
 
 decimal.addEventListener('click',()=>{
-    addDemical()
+    addDecimal()
 })
 
 clear.addEventListener('click',clearNum)
@@ -86,12 +88,38 @@ function clearNum(){
 }
 
 function deleteNum(){
-    currentOperand.textContent=currentOperand.textContent.toString().slice(0,-1)
+    currentNum = currentNum.toString().slice(0, -1);
+    currentOperand.textContent = currentNum;
 }
 
-function addDemical(){
+function addDecimal(){
     if(!currentNum.includes(".")){
         currentNum+="."
         currentOperand.textContent=currentNum
+    }
+}
+
+function getKeyPress(e){
+    e.preventDefault();
+    if(e.key>=0 && e.key<=9){
+        getNumbers(e.key)
+    }
+    if(e.key ==="Enter"||e.key==="=" &&currentNum!="" &&previousNum===""){
+        operate()
+    }
+    if(e.key==="+"||e.key==="-"||e.key==="/"){
+        getOperator(e.key)
+    }
+    if(e.key==="*"){
+        getOperator("*")
+    }
+    if(e.key==="."){
+        addDecimal()
+    }
+    if(e.key==="Delete"){
+        clearNum()
+    }
+    if(e.key==="Backspace"){
+        deleteNum()
     }
 }
